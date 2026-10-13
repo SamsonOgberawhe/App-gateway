@@ -1,0 +1,37 @@
+spring:
+  application:
+    name: App-gateway
+  cloud:
+    gateway:
+      server:
+        webmvc:
+          routes:
+            - id: user-service-route
+              uri: ${USER_SERVICE_URL:http://localhost:8020}
+              predicates:
+                - Path=/api/v1/users/**
+              filters:
+#                - prefixPath=/api
+                - addResponseHeader=X-Powered-By,Excelabs gateway service
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          issuer-uri: http://localhost:8080/realms/Excelabs
+          jwk-set-uri: ${spring.security.oauth2.resourceserver.jwt.issuer-uri}/protocol/openid-connect/certs
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
+  endpoint:
+    gateway:
+      access: read-only
+server:
+  port: 8070
+
+
+jwt:
+  header-name: Authorization
+
