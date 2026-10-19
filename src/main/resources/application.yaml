@@ -9,7 +9,7 @@ spring:
             - id: user-service-route
               uri: ${USER_SERVICE_URL:http://localhost:8020}
               predicates:
-                - Path=/api/v1/users/**
+                - Path=/api/v1/user/**
               filters:
 #                - prefixPath=/api
                 - addResponseHeader=X-Powered-By,Excelabs gateway service
@@ -32,6 +32,12 @@ server:
   port: 8070
 
 
-jwt:
-  header-name: Authorization
+security:
+  jwt:
+    header-name: Authorization
+    enable-logging: true
+    token-prefix: Bearer
+    public-key: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtjL4WsoquUDPz5LjRPfk5w1dTGLd2nURR910gBm5VYiNZQi2EZxur+kBAkdSZ8WbK3CQfEjt86MnszSoJ4T2q4fcBC3QzxctaetHToq/3KV6XSxrI4kQVOjsnGUi33g7vVfVVZ9yORKbSRc5wlI2WX2T5paipcxHm9u45DZ06rlHm6aSfRmMs3bGaQ+Diqf+sqRsDH2RJLDZuRpkC/j7Ubt204U7Y6E+XNS12Q3OjBJUDT6VeyU/JkQQg33YDWOo+qqCUoNy4sZswNeyZoZRuuHVRwRG/6TnecEfQO1Yy477jr9HlS7eI6gxJ4wjTdPYW0YBMELRZ9chAYm+9z1kCQIDAQAB
+    expiration-ms: 86400000
+    issuer: sample-application
 
